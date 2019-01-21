@@ -70,15 +70,88 @@
 <script src="../../common/js/jquery.js"></script>
 <script>
 // 第1問  id='q1'の要素の文字色を赤色にせよ。
+$(function(){ 
+   $('#q1').css('color','red');
+//セレクタにid＃を指定し、メソッドcssに色を赤にすることを指定する。
+
 // 第2問  id='q2'の要素をクリックしたら背景色をピンクにせよ。
+$('#q2').click(function(){
+  $(this).css('background-color','pink');
+});
+//clickメソッドは()の中に関数を書く。thisはq2を示している。
+
 // 第3問  id='q3'の要素をクリックしたら2秒かけてフェードアウトさせよ。
+$('#q3').click(fadeOut);
+function fadeOut(){
+  $(this).fadeOut(2000);
+}
+//fadeOutメソッドはフェードアウトするメソッドである。
+// click(),fadeOut()　どちらも()があり、そこに値とか関数を書いている。これを「引数」と呼ぶ。
+//何回も同じ記述をする場合に面倒になるので、関数化するのは非常に重要。
+
 // 第4問  id='q4'の要素をクリックしたらこの要素の前後とこの要素内の前後にテキストを挿入せよ。
+$('#q4').click(function() {
+          $(this).prepend('DOMの中の前')
+                 .append('DOMの中の後')
+                 .before('DOMの前')
+                 .after('DOMの後');
+        });
+
 // 第5問  id='q5'の要素をクリックしたらこの要素にlargeというクラスを付与せよ。
+$('#q5').click(function() {
+          $(this).addClass('large');
+        });
+//DOMにクラス属性を追加できるメソッドがaddClass 半角スペースをつけてクラス名を追加することも可能。
+
 // 第6問  id='q6'の要素をクリックしたらこの要素を2秒かけてmargin-topとmargin-leftを100pxの位置に移動させよ。
+$('#q6').click(function() {
+          $(this).animate({
+            'marginLeft': 100,
+            'marginTop': 100
+          }, 2000);
+        });
+//animate({});によって囲まれ、プロパティ:値のセットを,（カンマ）によって区切ります。
+//引数２つもつメソッド .animate({〜}, 2000);    
+//cssはmargin-topだけどJQはmarginTopキャメルケースなので書き方に注意
+
 // 第7問  id='q7'の子要素をクリックしたら、その要素のインデックス（何番目か）をconsole.log()とalert()を用いて表示させよ。
+$('#q7').find('li').click(function() {
+          var targetNum = $(this).index();
+          console.log(targetNum);
+          alert(targetNum);
+        });
+//findメソッドを使って子要素を選択するメソッド
+// <li>要素の順番を変数に格納
+// 変数の中身をコンソールに表示 最初はゼロ。
+// alert() 引数の値をアラートとして表示
+
 // 第8問  id='q8'の要素をhoverしたらlargeというクラスを付与し、hoverが外れたら、クラスを削除せよ。
+$('#q8').hover(function() {
+  $(this).addClass('large');
+}, function() {
+  $(this).removeClass('large');
+});
+//Q5の応用。clickメソッドをhoveメソッドに変更し、hoverした後に第一引数、hoverが離れた後に第二引数が実行される。
+//「removeClass()」は、HTML要素の「class属性」に付与されたクラスを削除することができるメソッド。
+
 // 第9問  id='q9'の要素をクリックしたらこの要素に設定してあるdata属性をconsoleに表示せよ。
+$('#q9').click(function() {
+  var text = $(this).data('text');
+  console.log(text);
+});
+//data() その要素のdata属性を取得もしくはセットするメソッド。data('text')で取得する。
+//DOMを見てもらうと data-text='jQuery' といった記述がある。これはDOMに特殊な値を設定する方法で、jQueryを使うことによって簡単に取得出来る
+//date()を使うとHTML要素内に付与されたdate属性の取得設定変更などを行える。独自の属性を作成可能。
+
 // 第10問 id='q10'の子要素をクリックしたら、その要素のインデックスと等しいid='q11'の子要素にlargeというクラスを追加せよ。
+$('#q10').find('li').click(function() {
+  var num = $(this).index();
+  $('#q11').find('li').eq(num).addClass('large');
+});
+//Q5,7の応用。findメソッドを使って子要素を選択するメソッド
+// .eq() は、複数のHTML要素の中からインデックス番号を指定することで特定の要素だけを取得
+// $(this).index()で取得された値（何番目）をeq()の引数に入れることによって、#q10と対応した#q11のDOMを取得出来る。
+});
 </script>
 </body>
 </html>

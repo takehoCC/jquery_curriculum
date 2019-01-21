@@ -27,11 +27,12 @@
     <script>
         $('.nav li').click(function() {
           var index=$('.nav li').index(this);      //クリックしたタブのインデックス番号を変数indexに代入
-          $('.contents li').addClass('is-hidden');  
-          $('.contents li').eq(index).removeClass('is-hidden'); 
+          $('.contents li').removeClass('active');     //タブの装飾
+          $(this).addClass('active');             //タブの装飾
+          $(".contents li").hide();              //全てのコンテンツを一旦隠す
+          $('.contents > li').eq(index).show(); //クリックしたタブに対応するコンテンツを表示
         });
 
-      
       // 今回やるのはタブメニューです。
       // navの小要素であるliをクリックして、contents内の小要素であるli要素を表示させる。
       // .index() 要素のindexを取得します。
