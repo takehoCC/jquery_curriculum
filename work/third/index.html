@@ -26,9 +26,9 @@
     <script src="../../common/js/jquery.js"></script>
     <script>
         $('.nav li').click(function() {
-          var index=$('.nav li').index(this);      //クリックしたタブのインデックス番号を変数indexに代入
+          var index=$('.nav li').index(this);      //hoveして選択したインデックス番号を変数indexに代入
           $('.contents li').addClass('is-hidden');  
-          $('.contents li').eq(index).removeClass('is-hidden'); 
+          $('.contents li').eq(index).removeClass('is-hidden');  //選択したインデックス番号のis-hiddenをremoveClassで消す
         });
 
       

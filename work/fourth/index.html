@@ -47,18 +47,19 @@
     </div>
     <script src="../../common/js/jquery.js"></script>
     <script>
-        $('.menu__list li').hover(function(){
-            $("ul:not(:animated)", this).slideDown();
+      $('.menu__list li').hover(function(){
+            $(this).children("ul.menu__list__childList").stop().slideDown();
         },  function(){
-            $("ul.menu__list__childList",this).slideUp();
-        });
+            $("ul.menu__list__childList", this).stop().slideUp();
+      });
 
       //セレクタmenu__list li（A）の要素に対して、ホバー（イベント）を起こした時に、
       //menu__list__childList（B）を表示させる。
+      //hoverしたliを示しているthis
+      //("ul.menu__list__childList", this)のthisはhoveしたときに子要素のul.menu__list__childListを表している
       //<ul class="menu__list">の子要素の<li>にマウスを乗せると、さらにその<li>の子要素の<ul>menu__list__childListが出現する
       //not(:animated)とは、(アニメーションしてる最中のものに対しては、ホニャララを実行しないよ)
       //hover()の場合は、子要素に移動しても新たに処理はスタートしないから、ずっとマウスオーバーしている状態。
-
       // 今回やるのはドロップメニューです。
       // メニューをhoverすると隠れている中のメニューが表示され、メニューから離れると中のメニューが非表示されるプログラムです。
       // [使用するメソッド]
@@ -68,6 +69,11 @@
       // .next() 要素の隣の要素を取得します。
       // .children() 要素の子要素を取得します。
       // .stop() 現在動作中のアニメーション処理を全て中止します。
+      //       $('.menu__list li').hover(function(){
+      /*$("ul.menu__list__childList").slideDown();
+        },  function(){
+            $("ul.menu__list__childList", this).slideUp();
+        });*/
     </script>
   </body>
 </html>

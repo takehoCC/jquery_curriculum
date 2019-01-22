@@ -84,7 +84,25 @@
     </div>
     <script src="../../common/js/jquery.js"></script>
     <script>
-      
+    $(function() {
+      //selectをセレクタにchangeをメソッドに指定し、
+      //var itemの値が変更された時にvalueとliのdata-category-typeが一致しているものをだけ表示させる
+      $(".select").change(function(){ 
+        var item=$(this).val(); //thisは選択されたselectを示す (選択したvalue値を変数に格納)
+        if(item=="all"){ //if文で条件を比較
+          $('ul.list li').each(function(){ $(this).show() }); //if (条件式) {trueの場合の処理}
+        } else {                                              // All以外だったら
+          $('ul.list li').each(function(){                   //each メソッドを使うと、選択した要素にカスタマイズした処理ができる
+            if($(this).data("category-type")==item){ 
+              $(this).show();                                //valueとliのdata-category-typeが一致していたら見せる
+            } else {
+              $(this).hide();                               // それ以外だったら隠す
+            }
+          });
+        }
+      });
+    }); 
+
       // 今回やるのはソート機能です。
       // selectボックスをクリックして言語を選び、その言語と関係のあるリストだけが表示されるプログラムです。
       // [処理の流れ]
