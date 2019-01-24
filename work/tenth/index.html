@@ -29,66 +29,72 @@
 
     <script>
     $(function() {
-    //変数の宣言
+      //変数の宣言
       var pageNum = 0;
       var presearchword = '';
-    //検索ボタンがクリックされたら処理
-    $('#js-search-button').on('click',api_books);
-      function api_books(){ 
-      var searchword = $('#js-search-word').val();
-    if(presearchword === searchword){
-      pageNum++;
-    } else {
-      $(".lists").empty();
-      pageNum = 1;
-    }
-    presearchword　= searchword; //同等を示す
-    // console.log(presearchword);
-    //json読み込み開始
-    $.ajax({
-      url: 'https://app.rakuten.co.jp/services/api/BooksTotal/Search/20130522',
-      type: 'GET',
-      datatype: 'json',
-      data: {
-      // 「区分:サービス固有パラメーター」を確認して、必要な情報をdata内に入れましょう。
-      keyword: searchword,
-      applicationId: '1019399324990976605', 
-      booksGenreId: '001',
-      page: pageNum,
-      hits: 20  //1ページあたりの取得件数
-      }
-    }).done(function (data) {   //通信に成功した場合
-    // console.log(data);
-    console.log('test');
-      get_data(data)
-    }).fail(function() { 
-      error()})              //通信に失敗した場合
+      //検索ボタンがクリックされたら処理
+      $('#js-search-button').on('click', function() {
+        api_books();
+      });
+
+      function api_books() {
+        var searchword = $('#js-search-word').val();
+        if(presearchword === searchword){
+          pageNum++;
+        } else {
+          $(".lists").empty();
+          pageNum = 1;
+        }
+        presearchword　= searchword; //＝代入
+        // console.log(presearchword);
+        //json読み込み開始
+        $.ajax({
+          url: 'https://app.rakuten.co.jp/services/api/BooksTotal/Search/20130522',
+          type: 'GET',
+          datatype: 'json',
+          data: {
+          // 「区分:サービス固有パラメーター」を確認して、必要な情報をdata内に入れましょう。
+          keyword: searchword,
+          applicationId: '1019399324990976605', 
+          booksGenreId: '001',
+          page: pageNum,
+          hits: 20  //1ページあたりの取得件数
+          }
+        }).done(function (data) {   //通信に成功した場合
+        // console.log(data);
+        //console.log('test');
+          get_data(data)
+        }).fail(function() { 
+          error()
+        })              //通信に失敗した場合
       };
     });
-    //関数化
-      function get_data(data){
-        var list = ''; 
-        if (data.hits > 0){ 
-        $.each(data.Items,function(i,item) {
-        list += '<li class="lists__item">' +
-            '<div class="lists__item__inner">' +
-              '<a href="'+ item.Item.itemUrl +'"class="lists__item__link" target="_blank">' +
-              '<img src="'+ item.Item.largeImageUrl +'" class="lists__item__img" alt="'+ item.Item.title +'">' +
-              '<p class="lists__item__detail">作品名：'+ item.Item.title +'</p>' +
-              '<p class="lists__item__detail">作者　：'+ item.Item.author +'</p>' +
-              '<p class="lists__item__detail">出版社：'+ item.Item.publisherName +'</p>' +
-              '</a>' + '</div>' + '</li>'
-        });
-        $('.lists').prepend(list); //DOMの中の前
-        }else {
-          $('.lists').empty();
-          $('.lists').html('<p class="message">検索結果がありませんでした。<br>別のキーワードで検索してください</p>');
-        }};
 
-      function error(){
-        $('.lists').empty();
-        $('.lists').html('<p class="message">データ通信できませんでした<br>接続を確認してください。</p>');
-      };
+    //関数化
+    function get_data(data){
+      var list = ''; 
+      if (data.hits > 0){ 
+        console.log(data.Items);
+        $.each(data.Items,function(i,item) {
+          console.log(item.Item);
+          list += '<li class="lists__item">' +
+              '<div class="lists__item__inner">' +
+                '<a href="'+ item.Item.itemUrl +'"class="lists__item__link" target="_blank">' +
+                '<img src="'+ item.Item.largeImageUrl +'" class="lists__item__img" alt="'+ item.Item.title +'">' +
+                '<p class="lists__item__detail">作品名：'+ item.Item.title +'</p>' +
+                '<p class="lists__item__detail">作者　：'+ item.Item.author +'</p>' +
+                '<p class="lists__item__detail">出版社：'+ item.Item.publisherName +'</p>' +
+                '</a>' + '</div>' + '</li>'
+        });
+        $('.lists').prepend(list); //DOMの中の前 appendでも一緒
+      } else {
+        $('.lists').html('<p class="message">検索結果がありませんでした。<br>別のキーワードで検索してください</p>');
+      }
+    };
+
+    function error(){
+      $('.lists').html('<p class="message">データ通信できませんでした<br>接続を確認してください。</p>');
+    };
     </script>
   </body>
 </html>
